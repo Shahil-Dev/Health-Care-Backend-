@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.9.0",
   "engineVersion": "e922089b7d7502aff4249d5da3420f6fa55fc6ad",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Specialty {\n  id          String    @id @default(uuid(7))\n  title       String    @unique @db.VarChar(255)\n  description String?   @db.Text\n  icon        String?   @db.VarChar(255)\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n  isDeleted   Boolean   @default(false)\n  deletedAt   DateTime?\n\n  @@index([isDeleted], name: \"specialty_is_deleted_index\")\n  @@index([title], name: \"specialty_title_index\")\n  @@map(\"specialties\")\n}\n",
+  "inlineSchema": "model Specialty {\n  id          String    @id @default(uuid(7))\n  title       String    @unique @db.VarChar(255)\n  description String?   @db.Text\n  icon        String?   @db.VarChar(255)\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n  isDeleted   Boolean   @default(false)\n  deletedAt   DateTime?\n\n  @@index([isDeleted], name: \"specialty_is_deleted_index\")\n  @@index([title], name: \"specialty_title_index\")\n  @@map(\"specialties\")\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},

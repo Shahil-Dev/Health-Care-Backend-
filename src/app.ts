@@ -1,5 +1,4 @@
 import express, { Application, Request, Response } from "express";
-import { prisma } from "./App/lib/prisma";
 import { IndexRouter } from "./App/Route";
 
 const app: Application = express();
@@ -13,14 +12,8 @@ app.use(express.json());
 app.use("/api/v1", IndexRouter);
 
 // Basic route
-app.get("/", async (req: Request, res: Response) => {
-  const specialty = await prisma.specialty.create({
-    data: {
-      title: "Geology",
-    },
-  });
-
-  res.status(200).json({ message: "api working", specialty });
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello, TypeScript + Express!");
 });
 
 export default app;
