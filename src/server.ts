@@ -1,9 +1,10 @@
 import app from "./app";
+import { envVars } from "./Config/env";
 
 const machina = () => {
   try {
-    app.listen(5000, () => {
-      console.log(`Server is running on http://localhost:5000`);
+    app.listen(envVars.PORT, () => {
+      console.log(`Server is running on http://localhost:${envVars.PORT}`);
     });
   } catch (error) {
     console.error("Error starting server:", error);
