@@ -1,4 +1,5 @@
 import { auth } from "../../lib/auth";
+import { prisma } from "../../lib/prisma";
 
 interface IRegistrationPatient {
   name: string;
@@ -20,6 +21,7 @@ const registrationPatient = async (payload: IRegistrationPatient) => {
 interface ILoginPatient {
   email: string;
   password: string;
+  name: string;
 }
 
 //login patient service
@@ -37,7 +39,19 @@ const loginPatient = async (payload: ILoginPatient) => {
   if (Data.user.isDeleted || Data.user.status === "DELETED") {
     throw new Error("Your account is deleted. Please create a new account.");
   }
-  return Data;
+
+  const Patient = await prisma.$transaction(async (tx) => {
+    const patientTx = await tx.patient.create({
+      data: {
+        userId: Data.user.id,
+        name: payload.name,
+        email: payload.email,
+      },
+    });
+    return patientTx;
+  });
+
+  return { ...Data, Patient };
 };
 
 export const PatientService = {
